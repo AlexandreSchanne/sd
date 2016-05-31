@@ -98,4 +98,3 @@ public class Node {
 		return alt;
 	}
 }
-..
