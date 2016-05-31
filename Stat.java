@@ -1,4 +1,4 @@
-yoooooooooooooooooooopackage senCity;
+package senCity;
 
 
 
