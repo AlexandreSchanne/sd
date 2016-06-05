@@ -1,100 +1,106 @@
 package senCity;
 
-public class Node {
-	private char lettre;
-	private Node fils;
-	private Node frere;
-	private Traces alt;
-	
-	public Node() {
-		lettre = '\u0000';
-		fils = null;
-		frere = null;
-		alt = null;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+
+public class Node extends TreeTraces implements Iterable<Trace> {
+
+
+	public Node(){
+		this.lettre = '@';
+		this.fils = null;
+		this.frere = null;
+		this.tra = new ArrayListTraces();
 	}
-	
-	public void ajouter(Trace t, int place) {
+
+	public void ajouter(Trace t, int position) {
 		String ssid = t.getSsid();
-		char charSSID = ssid.charAt(place);
-		int lengthSSID = ssid.length();
-		if(lengthSSID == place+1) {
-			if(lettre == '\u0000') {
-				lettre = charSSID;
-				if(alt == null) {
-					alt = new ArrayListTraces();
+		int tailleMOT = ssid.length();
+		char ssidSEPARE = ssid.charAt(position);
+
+
+		if(tailleMOT != position+1) {
+			if(lettre == '@') {
+				lettre = ssidSEPARE;
+				if(fils == null) {
+					fils = new Node();	
 				}
-				alt.ajouter(t);;
+				fils.ajouter(t,position+1);
 			}
-			else if(lettre == charSSID) {
-				if(alt == null) {
-					alt = new ArrayListTraces();
+			else if(lettre == ssidSEPARE) {
+				if(fils == null) {
+					fils = new Node();
 				}
-				alt.ajouter(t);
+				fils.ajouter(t,position+1);
+			}
+			else if(lettre != ssidSEPARE) {
+				if(frere == null) {
+					frere = new Node();
+				}
+				this.frere.ajouter(t,position);
+			}
+		}
+
+
+		else {
+			if(this.lettre == '@') {
+				lettre = ssidSEPARE;
+				if(tra == null) {
+					tra = new ArrayListTraces();
+				}
+				tra.ajouter(t);
+			}
+			else if(lettre == ssidSEPARE) {
+				if(tra == null) {
+					tra = new ArrayListTraces();
+				}
+				tra.ajouter(t);
 			}
 			else {
 				if(frere == null) {
 					frere = new Node();
 				}
-				frere.ajouter(t, place);
-			}
-		}
-		else {
-			if(lettre == '\u0000') {
-				lettre = charSSID;
-				if(fils == null) {
-					fils = new Node();
-				}
-				fils.ajouter(t, place+1);
-			}
-			else if(lettre == charSSID) {
-				if(fils == null) {
-					fils = new Node();
-				}
-				fils.ajouter(t, place+1);
-			}
-			else if(lettre != charSSID) {
-				if(frere == null) {
-					frere = new Node();
-				}
-				frere.ajouter(t, place);
+				frere.ajouter(t,position);
 			}
 		}
 	}
-	
-	public int getTaille() {
-		if(alt != null) {
-			return alt.taille();
-		}
-		else {
-			return 0;
-		}
+
+	public void initialiser(){
+		this.node = new Node();
+		this.tra = new ArrayListTraces();
 	}
-	
+
+	public String toString(){
+		return ("lettre = "+lettre+", fils = "+fils+", frere = "+frere+", tra = "+tra);
+	}
+
 	public void setFils(Node n) {
 		fils = n;
 	}
-	
-	public void setFrere(Node n) {
-		frere = n;
-	}
-	
-	public void setLettre(char c) {
-		lettre = c;
-	}
-	
+
 	public Node getFils() {
 		return fils;
 	}
-	
+
+	public void setFrere(Node n) {
+		frere = n;
+	}
+
 	public Node getFrere() {
-		return frere;
+		return this.frere;
 	}
-	
+
+	public void setLettre(char c) {
+		lettre = c;
+	}
+
 	public char getLettre() {
-		return lettre;
+		return this.lettre;
 	}
-	
+
 	public Traces getTraces() {
-		return alt;
+		return this.tra;
 	}
+
 }

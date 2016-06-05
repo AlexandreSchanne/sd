@@ -11,11 +11,17 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public abstract class Traces extends AbstractTraces implements Iterable<Trace>{
-
-
+	
+	Collection<Trace> list2;
+	
+	public abstract Traces extract(String ssid);
+	
+	public void ajouter(Trace trace){
+		list.add(trace);
+	}
+	
 	public int taille(){
 		return list.size();
 	}
-
 
 }

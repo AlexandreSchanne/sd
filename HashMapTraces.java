@@ -15,6 +15,4 @@ public class HashMapTraces extends MapTraces {
 	public void initialiser() {
 		dictionnaire = new HashMap <String, Traces>();
 	}
-
-	
 }

@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ArrayListTraces extends Traces{
-
-	public void ajouter(Trace trace){
-		list.add(trace);
+	
+	public ArrayListTraces(){
+		this.list= new ArrayList <Trace> ();
 	}
 
 	public void initialiser() {
@@ -19,7 +19,7 @@ public class ArrayListTraces extends Traces{
 	public Traces extract(String ssid){
 		//double t1 = System.currentTimeMillis();
 		ArrayListTraces nouveau = new ArrayListTraces();
-		for(Trace t: this){
+		for(Trace t: list){
 			if(t.getSsid().equals(ssid)){
 				nouveau.ajouter(t);
 			}

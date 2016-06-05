@@ -6,33 +6,23 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 
-public abstract class AbstractTraces {
+public abstract class AbstractTraces{
 
-	Collection <Trace> list;
+	Collection<Trace> list;
 	double compteurClass;
 
-	public abstract Traces extract(String ssid);
-	public abstract void initialiser();
+
+
 	public abstract void ajouter(Trace t);
+	public abstract void initialiser();
 
-	public String toString(){
-		String a = null;
-		for(Trace d :list){
-			a=a+d.toString();
-		}
-		return a;
-	}
 
-	public Iterator<Trace> iterator(){
-		Iterator<Trace> it = list.iterator();
-		return it;
-	}
-	
 	public void load(String fichierWifi,String fichierGPS, double pourcentage) throws IOException {
 		FileReader flot1;
 		FileReader flot2;
@@ -112,11 +102,15 @@ public abstract class AbstractTraces {
 					double longitude = Double.parseDouble(s2);
 					String ts = String.valueOf(ts1);
 					Trace nouveau = new Trace(ts,ssid,signal,new GPS (longitude, latitude));
-					list.add(nouveau);
+					/*System.out.println(nouveau);
+					System.out.println(list);*/
+					this.ajouter(nouveau);
 				}
 				sc1.close();
 				sc2.close();
-			}	
+			}
+			
+			//System.out.println(dictionnaire.values());
 		}
 		catch (IOException E) {
 			System.out.println("Il y a une erreur de type IOException");
@@ -145,7 +139,19 @@ public abstract class AbstractTraces {
 			}
 			reecriture.close();
 
-		}catch(Exception e2){System.out.println("Problème" + e2.getMessage());}	
+		}catch(Exception e2){System.out.println("Problème" + e2.getMessage());}				
 	}
 
+	public String toString(){
+		String a = null;
+		for(Trace d :list){
+			a=a+d.toString();
+		}
+		return a;
+	}
+
+	public Iterator<Trace> iterator(){
+		Iterator<Trace> it = list.iterator();
+		return it;
+	}
 }

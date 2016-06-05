@@ -1,9 +1,11 @@
 package senCity;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 
-public abstract class MapTraces extends AbstractTraces {
-	
+public abstract class MapTraces extends AbstractTraces implements Iterable {
+
 	Map<String, Traces> dictionnaire;
 	
 	public Map getMap(){
@@ -11,14 +13,26 @@ public abstract class MapTraces extends AbstractTraces {
 	}
 	
 	public Traces extract(String ssid){
-		return this.dictionnaire.get(ssid);	
+		Traces TR = new ArrayListTraces();
+		//for (Entry<String, Traces> entry : dictionnaire.entrySet()) {
+		TR = dictionnaire.get(ssid);
+		//}
+		return TR;
 	}
 	
-	public void addToMap(String key, Traces value){
-		dictionnaire.put(key, value);
+	public void ajouter(Trace tra) {
+		if(dictionnaire.get(tra.getSsid()) == null){
+			Traces tr = new ArrayListTraces();
+			tr.ajouter(tra);
+			dictionnaire.put(tra.getSsid(),tr);
+		}else{
+			Traces tr = new ArrayListTraces();
+			tr = dictionnaire.get(tra.getSsid());
+			tr.ajouter(tra);
+			dictionnaire.put(tra.getSsid(),tr);
+			
+		}
 	}
 	
-	public void ajouter(Trace cl) {
-		dictionnaire.put(cl.getSsid(), this.extract(cl.getSsid()));
-	}	
+	/*dictionnaire.put(cl.getSsid(),this.extract(cl.getSsid()));*/
 }

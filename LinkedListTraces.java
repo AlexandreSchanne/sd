@@ -6,10 +6,6 @@ import java.util.LinkedList;
 
 public class LinkedListTraces extends Traces {
 
-	public void ajouter(Trace trace){
-		list.add(trace);
-	}
-
 	public void initialiser() {
 		this.list = new LinkedList <Trace> ();
 	}
@@ -26,4 +22,5 @@ public class LinkedListTraces extends Traces {
 		//System.out.println("temps d'exécution : "+((t2-t1)/1000));
 		return nouveau;
 	}
+
 }

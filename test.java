@@ -34,14 +34,29 @@ public class test {
 		}catch(ArrayIndexOutOfBoundsException e){System.out.println("Il n'y a rien en argument");}
 
 		Traces l = new ArrayListTraces();
-		Traces n = new ArrayListTraces();
+		/*Traces n = new ArrayListTraces();
 		l.load("capture_wifi.csv","capture_gps.csv",0.08);
-		l.save("01.txt", l.compteurClass);
+		n = l.extract("eduroam");
+		n.save("01.txt", l.compteurClass);
+		
+		HashMapTraces HM = new HashMapTraces();
+		HM.load("capture_wifi.csv","capture_gps.csv",0.08);
+		l = HM.extract("eduroam");
+		System.out.println(l);
+		//l = (HM.extract("eduroam"));
+		//System.out.println(HM.dictionnaire.values());
+		l.save("HashMapTraces.txt",l.compteurClass);*/
+		
+		TreeTraces TT = new Node();
+		TreeTraces YY = new Node();
+		Node no = new Node();
+		TT.load("capture_wifi.csv", "capture_gps.csv", 0.08);
+		l = TT.extract("eduroam");
+		//System.out.println(l);
+		l.save("treeTracesSave.txt",l.compteurClass);
+		
 		//n=l.extract("eduroam");
 		//System.out.println("memoire : "+Runtime.getRuntime().freeMemory());	// taille de l'espace libre
-		
-
-		System.out.println(n);
 		
 	}
 }
