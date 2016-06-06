@@ -13,6 +13,10 @@ public class Trace {
 		this.signal = signal;
 		this.g = g;
 	}
+	
+	public Trace(){
+		this.ts=" ";
+	}
 
 	public String toString(){
 		String a = null;

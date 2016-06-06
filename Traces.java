@@ -24,4 +24,14 @@ public abstract class Traces extends AbstractTraces implements Iterable<Trace>{
 		return list.size();
 	}
 
+	public Trace get(int i) {
+		int j=0;
+		Iterator<Trace> it = this.list.iterator();
+		Trace t = new Trace();
+		while(j!=i){
+			t=it.next();
+		}
+		return t;
+	}
+
 }

@@ -142,6 +142,7 @@ public class GrapheCouverture {
 	}
 
 	public List<Sommet> cheminLePlusCourt(double longi, double lati, double longi2, double lati2){
+
 		Trace tr = new Trace();
 		tr = chercheTrace(longi,lati);
 		Trace tra = new Trace();

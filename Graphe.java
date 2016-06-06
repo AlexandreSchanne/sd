@@ -68,7 +68,7 @@ public class Graphe<Sommet> {
 		this.ListeDeSommets.remove(sommet);
 	}
 
-	public void addPoids(Sommet sommet1, Sommet sommet2, int poids){
+	public void addPoids(Sommet sommet1, Sommet sommet2, double poids){
 		if(this.ListeDeSommets.contains(sommet1) && this.ListeDeSommets.contains(sommet2)){
 			int Position1DansTableau=0;
 			int Position2DansTableau=0;
@@ -93,10 +93,10 @@ public class Graphe<Sommet> {
 	}
 
 
-	public ArrayList<CoupleDeSommets> suivant(Sommet sommet){
+	public ArrayList<CoupleDeSommets> suivant(Sommet plusPetit){
 		ArrayList<CoupleDeSommets> element= null;
-		if(this.ListeDeSommets.contains(sommet)){
-			int index = this.ListeDeSommets.indexOf(sommet);
+		if(this.ListeDeSommets.contains(plusPetit)){
+			int index = this.ListeDeSommets.indexOf(plusPetit);
 			element = this.listeDeCouples.get(index);
 		}
 		return element;
@@ -104,24 +104,24 @@ public class Graphe<Sommet> {
 
 
 	public List<Sommet> dijkstra(Sommet origine, Sommet destination){			
-		HashMap<Sommet, Integer> prix = new HashMap<Sommet, Integer>();
+		HashMap<Sommet, Double> prix = new HashMap<Sommet, Double>();
 		HashMap<Sommet,Sommet> etape = new HashMap<Sommet,Sommet>();
 		ArrayList<Sommet> enCours = new ArrayList<Sommet>();
 		ArrayList<Sommet> traite = new ArrayList<Sommet>();
 
 		for(Sommet sommet : this.ListeDeSommets){
-			prix.put(sommet, 999999999);
+			prix.put(sommet, 99999999.0);
 			etape.put(sommet, null);
 		}
 
-		prix.put(origine, 0);
+		prix.put(origine, 0.0);
 		enCours.add(origine);
 
 		while(!enCours.isEmpty() && !traite.contains(destination)){
 			Sommet plusPetit = enCours.get(0);
-			int minCout = 999999999;
+			double minCout = 999999999;
 			for(Sommet sommet : enCours){
-				int cout = prix.get(sommet);
+				double cout = prix.get(sommet);
 				if(minCout > cout){
 					minCout = cout;
 					plusPetit = sommet;
@@ -133,8 +133,8 @@ public class Graphe<Sommet> {
 			for(CoupleDeSommets c : succ){
 				Sommet element = this.ListeDeSommets.get(c.getPosition());
 				if(!traite.contains(element)){
-					int coutPlusPetit = prix.get(plusPetit);
-					int coutElement = prix.get(element);
+					double coutPlusPetit = prix.get(plusPetit);
+					double coutElement = prix.get(element);
 					if(coutElement > coutPlusPetit+c.getValuation()){
 						prix.put(element, coutPlusPetit+c.getValuation());
 						etape.put(element, plusPetit);
