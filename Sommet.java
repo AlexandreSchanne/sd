@@ -2,18 +2,17 @@ package senCity;
 
 public class Sommet {
 	
-	String numero;
-	String numero2;
+	GPS numero;
 
-	public Sommet(String numero){
+	public Sommet(GPS numero){
 		this.numero=numero;
 	}
 	
 	public String toString(){
-		return numero;
+		return numero.toString();
 	}
 	
-	public String getSommet(){
+	public GPS getSommet(){
 		return this.numero;
 	}
 }

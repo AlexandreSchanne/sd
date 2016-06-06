@@ -131,7 +131,7 @@ public class GrapheCouverture {
 		double courant;
 		for(Trace t : AllTraces){
 			GPS s1 = new GPS(longi,lati);
-			Trace tra = new Trace("","",1,s1);
+			Trace tra = new Trace("","",10,s1);
 				courant = calculMetre(t, tra);
 				if(courant > resultat){
 					resultat = courant;

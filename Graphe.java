@@ -106,18 +106,16 @@ public class Graphe<Sommet> {
 	public List<Sommet> dijkstra(Sommet origine, Sommet destination){			
 		HashMap<Sommet, Double> prix = new HashMap<Sommet, Double>();
 		HashMap<Sommet,Sommet> etape = new HashMap<Sommet,Sommet>();
-		ArrayList<Sommet> enCours = new ArrayList<Sommet>();
+		ArrayList<Sommet> courant = new ArrayList<Sommet>();
 		ArrayList<Sommet> traite = new ArrayList<Sommet>();
-
+		prix.put(origine, 0.0);
+		enCours.add(origine);
 		for(Sommet sommet : this.ListeDeSommets){
 			prix.put(sommet, 99999999.0);
 			etape.put(sommet, null);
 		}
-
-		prix.put(origine, 0.0);
-		enCours.add(origine);
-
 		while(!enCours.isEmpty() && !traite.contains(destination)){
+			if(!courant.)
 			Sommet plusPetit = enCours.get(0);
 			double minCout = 999999999;
 			for(Sommet sommet : enCours){

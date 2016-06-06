@@ -55,18 +55,6 @@ public class test {
 
 			Scanner sc = new Scanner(System.in);
 
-			System.out.println("Veuillez entrer les coordonnées de départ un mot :\n longitude : \n");
-			String departLongi = sc.nextLine();
-			System.out.println("latitude : \n");
-			String departLati = sc.nextLine();
-			System.out.println("Veuillez rentrer les coordonnées d'arrivée : \n longitude :\n");
-			String arriveLongi = sc.nextLine();
-			System.out.println("latitude : \n");
-			String arriveLati = sc.nextLine();
-			double longitude1 = Double.parseDouble(departLongi);
-			double latitude1 = Double.parseDouble(departLati);
-			double longitude2 = Double.parseDouble(arriveLongi);
-			double latitude2 = Double.parseDouble(arriveLati);
 			
 			GrapheCouverture GC = new GrapheCouverture(l);
 			Graphe g = new Graphe();
@@ -74,12 +62,27 @@ public class test {
 			List<Sommet> list = new ArrayList();
 			Trace t1 = new Trace();
 			Trace t2 = new Trace();
-			t1=GC.chercheTrace(longitude1, latitude1);
-			t1=GC.chercheTrace(longitude2, latitude2);
-			GC.couverture(t1, t2);
+
+			GC.couverture(GC.Barycentre, GC.loin);
 			GC.genereGraphe();
 			
-			if(args[2].equals("trouverChemin")){
+			if(!(args[2].equals("non"))){
+				System.out.println("Veuillez entrer les coordonnées de départ un mot :\n longitude : \n");
+				String departLongi = sc.nextLine();
+				System.out.println("latitude : \n");
+				String departLati = sc.nextLine();
+				double longitude1 = Double.parseDouble(departLongi);
+				double latitude1 = Double.parseDouble(departLati);
+				System.out.println("Veuillez rentrer les coordonnées d'arrivée : \n longitude :\n");
+				String arriveLongi = sc.nextLine();
+				System.out.println("latitude : \n");
+				String arriveLati = sc.nextLine();
+				
+				double longitude2 = Double.parseDouble(arriveLongi);
+				double latitude2 = Double.parseDouble(arriveLati);
+				t1=GC.chercheTrace(longitude1, latitude1);
+				t2=GC.chercheTrace(longitude2, latitude2);
+				
 			GC.cheminLePlusCourt(longitude1, latitude1, longitude2, latitude2);
 		}
 	}

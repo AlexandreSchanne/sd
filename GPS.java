@@ -27,6 +27,6 @@ public class GPS {
 	}
 	
 	public String toString(){
-		return ("latitude : "+latitude+" et longitude : "+longitude);
+		return ("Longitude : "+longitude+" et latitude : "+latitude);
 	}
 }
