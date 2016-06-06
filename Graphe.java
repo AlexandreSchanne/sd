@@ -106,18 +106,18 @@ public class Graphe<Sommet> {
 	public List<Sommet> dijkstra(Sommet origine, Sommet destination){			
 		HashMap<Sommet, Double> prix = new HashMap<Sommet, Double>();
 		HashMap<Sommet,Sommet> etape = new HashMap<Sommet,Sommet>();
-		ArrayList<Sommet> courant = new ArrayList<Sommet>();
-		ArrayList<Sommet> traite = new ArrayList<Sommet>();
+		ArrayList<Sommet> enCours = new ArrayList<Sommet>();
+		ArrayList<Sommet> dejaFait = new ArrayList<Sommet>();
 		prix.put(origine, 0.0);
 		enCours.add(origine);
 		for(Sommet sommet : this.ListeDeSommets){
 			prix.put(sommet, 99999999.0);
 			etape.put(sommet, null);
 		}
-		while(!enCours.isEmpty() && !traite.contains(destination)){
-			if(!courant.)
+
+		while(!enCours.isEmpty() && !dejaFait.contains(destination)){
 			Sommet plusPetit = enCours.get(0);
-			double minCout = 999999999;
+			double minCout = 999999999.0;
 			for(Sommet sommet : enCours){
 				double cout = prix.get(sommet);
 				if(minCout > cout){
@@ -125,12 +125,12 @@ public class Graphe<Sommet> {
 					plusPetit = sommet;
 				}
 			}
-			traite.add(plusPetit);
+			dejaFait.add(plusPetit);
 			enCours.remove(plusPetit);
 			ArrayList<CoupleDeSommets> succ = this.suivant(plusPetit);
 			for(CoupleDeSommets c : succ){
 				Sommet element = this.ListeDeSommets.get(c.getPosition());
-				if(!traite.contains(element)){
+				if(!dejaFait.contains(element)){
 					double coutPlusPetit = prix.get(plusPetit);
 					double coutElement = prix.get(element);
 					if(coutElement > coutPlusPetit+c.getValuation()){

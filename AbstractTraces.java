@@ -24,6 +24,7 @@ public abstract class AbstractTraces{
 
 
 	public void load(String fichierWifi,String fichierGPS, double pourcentage) throws IOException {
+		Traces l = new ArrayListTraces();
 		FileReader flot1;
 		FileReader flot2;
 		BufferedReader flotFiltre1;
@@ -109,7 +110,6 @@ public abstract class AbstractTraces{
 				sc1.close();
 				sc2.close();
 			}
-			
 			//System.out.println(dictionnaire.values());
 		}
 		catch (IOException E) {

@@ -2,6 +2,7 @@ package senCity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
 import java.lang.Math;
 
 public class GrapheCouverture {
@@ -13,8 +14,8 @@ public class GrapheCouverture {
 	Trace Barycentre;
 	int nombreDeTrace;
 
-	public GrapheCouverture (Traces trace){
-		this.AllTraces=trace;
+	public GrapheCouverture () throws IOException{
+		this.AllTraces = new ArrayListTraces();
 		this.hauteur=0;
 		this.largeur=0;
 	}
@@ -23,7 +24,8 @@ public class GrapheCouverture {
 		return this.AllTraces.toString();
 	}
 
-	public void Barycentre(int signal){
+	public void Barycentre(int signal) throws IOException{
+		this.AllTraces.load("capture_wifi_2.csv","capture_gps_2.csv",0.08);
 
 		double centreLongitude=0.0;
 		double latitude;
@@ -42,7 +44,7 @@ public class GrapheCouverture {
 		centreLatitude = centreLatitude/compteur;
 
 		Barycentre = new Trace("","",1,new GPS(centreLongitude,centreLatitude));
-
+		double difference=0;
 		for(Trace t:AllTraces){
 			if(t.getSignal()>signal){
 				nombreDeTrace++;
@@ -51,19 +53,23 @@ public class GrapheCouverture {
 
 				if(latitude-centreLatitude > hauteur){
 					hauteur = latitude-centreLatitude;
-					if(longitude-centreLongitude > hauteur){
-						hauteur=longitude-latitude;
-						loin =t;
+					}
+				if(longitude-centreLongitude > largeur){
+					largeur=longitude-centreLongitude;
+				}
+				if(largeur>difference){
+					difference=largeur;
+					if(hauteur>difference){
+						difference=hauteur;
+						loin=t;
 					}
 				}
-
+				if(hauteur>difference){
+					difference=hauteur;
+					loin=t;
+				}
 			}
-			if(hauteur-largeur <0){
-				dimensionFinale=2*largeur;
-			}
-			if(hauteur-largeur>0){
-				dimensionFinale=2*hauteur;
-			}
+			dimensionFinale = difference*2;
 		}
 		System.out.println(loin);
 		System.out.println(dimensionFinale);
@@ -75,11 +81,9 @@ public class GrapheCouverture {
 	public double calculMetre(Trace t1, Trace t2){
 		double PI = Math.PI;
 		double metre;
-		metre =Math.acos(Math.sin(t1.getGps().getLatitude() * PI / 180)
-				*Math.sin(t2.getGps().getLatitude()* PI / 180)
-				+ Math.cos(t1.getGps().getLatitude()* PI / 180) 
-				* Math.cos(t2.getGps().getLatitude()* PI / 180)
-				* Math.cos((t1.getGps().getLongitude()* PI / 180) - (t2.getGps().getLongitude()* PI / 180))) * 6378137;
+		metre =Math.acos(Math.sin(t1.getGps().getLatitude() * PI / 180)*Math.sin(t2.getGps().getLatitude()* PI / 180)+ Math.cos(t1.getGps().getLatitude()* PI / 180) 
+		* Math.cos(t2.getGps().getLatitude()* PI / 180)
+		* Math.cos((t1.getGps().getLongitude()* PI / 180) - (t2.getGps().getLongitude()* PI / 180))) * 6378137;
 		return metre;
 	}
 
@@ -103,7 +107,7 @@ public class GrapheCouverture {
 		Trace suivant=new Trace();
 		GPS G2 = new GPS(0,0);
 		Sommet s1 = new Sommet(G2);
-		
+
 		for(Trace t: AllTraces){
 			int cpt=0;
 			if(cpt==0){
@@ -124,7 +128,7 @@ public class GrapheCouverture {
 
 		return g;
 	}
-	
+
 	public Trace chercheTrace(double longi, double lati){
 		Trace meilleur = new Trace();
 		double resultat=0;
@@ -132,11 +136,11 @@ public class GrapheCouverture {
 		for(Trace t : AllTraces){
 			GPS s1 = new GPS(longi,lati);
 			Trace tra = new Trace("","",10,s1);
-				courant = calculMetre(t, tra);
-				if(courant > resultat){
-					resultat = courant;
-					meilleur = t;
-				}
+			courant = calculMetre(t, tra);
+			if(courant > resultat){
+				resultat = courant;
+				meilleur = t;
+			}
 		}
 		return meilleur;
 	}
